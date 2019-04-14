@@ -1,0 +1,59 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<title>d3</title>
+	<script src="../lib/d3.v4.min.js"></script>
+</head>
+<body>
+	<div id="con">
+		<p>p1</p>
+		<p>p2</p>
+		<p>p3</p>
+		<ul class="ul">
+			<li class="li1">0</li>
+			<li class="li2">1</li>
+			<li class="li3">10</li>
+			<li class="li4 lis">12</li>
+			<li class="li5 lis">13</li>
+		</ul>
+		<p class="plast">adsad</p>
+		
+	</div>
+	<script type="text/javascript">
+		// 选择器
+		let body = d3.select('body');
+		let con = d3.select('#con')
+		let p1 = d3.select('p');
+		let pAll = d3.selectAll('p');
+		let li = body.selectAll('li');
+		let ul = body.select('.ul');
+		let lis = body.selectAll('.lis');
+		let plast = body.select('.plast');
+
+		//插入文本
+		const str = 'china';
+		pAll.datum(str).text((d,i) => {
+			console.log(d,i);
+			return d+i;
+		});
+		const arr = ['dog','cat','elephent'];
+		li.data(arr).text((d,i) => {
+			return d;
+		});
+
+		// 设置样式
+		li.style('color','yellowgreen');
+		p1.style('color','red');
+		con.style('background','pink');
+		lis.style('color','red');
+
+		// 元素插入
+		ul.append('li').text('this is append p');
+		con.insert('li','.ul').text('this is insert li');//注意插入关系
+		body.insert("p","#con").text("insert p element");
+		plast.remove();
+
+	</script>
+
+</body>
+</html>
