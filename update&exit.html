@@ -1,0 +1,36 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<title></title>
+	<script src="./lib/d3.min.js"></script>
+</head>
+<body>
+	<ul>
+		<li>1</li>
+		<li>2</li>
+		<li>3</li>
+		<li>4</li>
+		<li>5</li>
+	</ul>
+	<script type="text/javascript">
+		//exit 部分的处理办法一般是：删除元素（remove）
+		let li = d3.selectAll('li');
+		const dataSet = [1,2];
+
+		let update = li.data(dataSet);
+		let exit = update.exit();
+		console.log(update)
+		console.log(exit);
+
+		update.text(d => {
+			return 'update'+d;
+		})
+
+		exit.text(d => {
+			return 'exit';
+		})
+		//exit.remove()
+	</script>
+
+</body>
+</html>

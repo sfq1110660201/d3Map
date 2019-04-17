@@ -2,8 +2,8 @@
 <html>
 <head>
 	<title></title>
-	<script src="lib/d3.v4.min.js"></script>
-	<script src="lib/topojson.v1.min.js"></script>
+	<script src="./lib/d3.v4.min.js"></script>
+	<script src="./lib/topojson.v1.min.js"></script>
 </head>
 <body>
 	<script type="text/javascript">
@@ -25,7 +25,7 @@
             .projection(projection)
             .context(context);
         //加在数据开始渲染地图
-        d3.json("data/china.topojson", function(error, us) {
+        d3.json("./data/china.topojson", function(error, us) {
 	        if (error) throw error;
 	        //一次性绘制整个地图轮廓
 	        mapPath(topojson.feature(us, us.objects.collection));

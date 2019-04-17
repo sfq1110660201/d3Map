@@ -21,7 +21,7 @@
 	        fill: black;
 	    }
     </style>
-    <script src="../lib/d3.min.js"></script>
+    <script src="./lib/d3.min.js"></script>
 </head>
 
 <body>
@@ -45,12 +45,12 @@
 		let xScale = d3.scale.ordinal()
 			.domain(d3.range(dataset.length))
 			.rangeRoundBands([0,width-padding.left-padding.right]);
+			
 		let xAxis = d3.svg.axis().scale(xScale).orient('bottom');
 		let yAxis = d3.svg.axis().scale(yScale).orient('left');
 		console.log(xAxis)
 
 		let rectPadding = 8;
-
 		svg.selectAll('rect')
 			.data(dataset)
 			.enter()

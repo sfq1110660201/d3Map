@@ -1,0 +1,119 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <title></title>
+    <style type="text/css">
+	    .axis path,
+	    .axis line {
+	        fill: none;
+	        stroke: black;
+	        shap-rendering: orispEdges;
+	    }
+
+	    .axis text {
+	        font-family: sans-serif;
+	        font-size: 11px;
+	    }
+
+	    .myText {
+	        text-anchor: middle;
+	        fill: black;
+	    }
+    </style>
+    <script src="./lib/d3.min.js"></script>
+</head>
+
+<body>
+	<script type="text/javascript">
+		const width = 300;
+		const height = 300;
+		let svg = d3.select('body')
+			.append('svg')
+			.attr('width',width)
+			.attr('height',height)
+			.attr('style','background:#fafafa');
+
+		let padding = {left: 30, right: 20, top: 20, bottom: 30};
+		let dataset = [20, 15, 13, 10, 26, 7];
+
+		let yScale = d3.scale.linear()
+			.domain([0,d3.max(dataset)])
+			.range([height-padding.top-padding.bottom,0]);
+		console.log(yScale);// function
+
+		let xScale = d3.scale.ordinal()
+			.domain(d3.range(dataset.length))
+			.rangeRoundBands([0,width-padding.left-padding.right]);
+			
+		let xAxis = d3.svg.axis().scale(xScale).orient('bottom');
+		let yAxis = d3.svg.axis().scale(yScale).orient('left');
+		console.log(xAxis)
+
+		let rectPadding = 8;
+		let rects = svg.selectAll('rect')
+			.data(dataset)
+			.enter()
+			.append('rect')
+			.attr('x',(d,i) => {
+				return xScale(i)+rectPadding/2+padding.left;
+			}).attr('y',(d,i) => {
+				//return yScale(d)+padding.top;
+				console.log(yScale(yScale.domain()[0]),yScale(d))
+				return yScale(yScale.domain()[0])+padding.top;
+				//return padding.top;
+			}).attr('width',(d,i) => {
+				return xScale.rangeBand() - rectPadding;
+			}).attr('height',(d,i) => {
+				//height-padding.top-padding.bottom-yScale(d);
+				return 0
+			}).attr('fill','steelblue')
+			.on('mouseover',function(d,i){
+				d3.select(this).attr('fill','yellow');
+			}).on('mouseout',function(d,i){
+				d3.select(this)
+					.transition()
+					.duration(500)
+					.attr('fill','steelblue')
+			});
+
+		rects.transition()//启动过渡
+			.delay((d,i) => {//指定延迟的时间
+				return i*200;
+			}).duration(2000)//指定过渡的持续时间
+			.ease('bounce')//linear：普通的线性变化;circle：慢慢地到达变换的最终状态;elastic：带有弹跳的到达最终状态;bounce：在最终状态处弹跳几次
+			.attr('y',(d,i) => {
+				return yScale(d)+padding.top;
+			}).attr('height',(d,i) =>{
+				return height-padding.top-padding.bottom-yScale(d);;
+			})
+
+
+		svg.selectAll('.myText')
+			.data(dataset)
+			.enter()
+			.append('text')
+			.attr('class','myText')
+			.attr('x',(d,i) => {
+				return xScale(i)+padding.left+rectPadding/2+(xScale.rangeBand()-rectPadding)/2;
+			}).attr('y',(d,i) => {
+				return yScale(d)+padding.top;
+			}).attr('style','font-size:10px;fill:red;')
+			.text(d => {
+				return d;
+			});
+
+			//添加x轴
+			svg.append('g')
+				.attr('class','axis')
+				.attr("transform","translate(" + padding.left + "," + (height - padding.bottom) + ")")
+				.call(xAxis);
+			svg.append('g')
+				.attr('class','axis')
+				.attr('transform',"translate(" + padding.left + "," + padding.top + ")")
+				.call(yAxis);
+
+	</script>
+</body>
+
+</html>
