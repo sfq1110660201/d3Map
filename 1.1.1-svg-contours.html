@@ -1,13 +1,20 @@
 <!DOCTYPE html>
 <html lang="en">
-<svg width="600" height="600"  stroke="#fff"  stroke-width="0.5"></svg>
+
 <script src="lib/d3.v4.min.js"></script>
 <script src="lib/d3-contour.v1.min.js"></script>
 <head>
     <meta charset="UTF-8">
     <title>d3-contours</title>
+    <style type="text/css">
+        *{
+            margin: 0;
+            padding: 0;
+        }
+    </style>
 </head>
 <body>
+    <svg width="600" height="600"  stroke="#fff"  stroke-width="0.5"></svg>
 <script>
 
     var svg = d3.select("svg"),
@@ -17,28 +24,36 @@
     //生成随机数据
     var data =[];
     for(var i = 0;i<30;i++){
-        data.push({
-            x      :Math.round(Math.abs(d3.randomNormal(0,width)())),
-            y      :Math.round(Math.abs(d3.randomNormal(0,height)())),
-            value  :Math.random() * 10
-        });
+        // console.log(d3.randomNormal(0,width)(),d3.randomNormal(0,height)())
+        let item = {
+            x : Math.round(Math.abs(d3.randomNormal(0,width)())),//d3.random.normal([mean, [deviation]])返回一个符合正态分布的随机数
+            y : Math.round(Math.abs(d3.randomNormal(0,height)())),
+            value : Math.random() * 10
+        };
+        // console.log(item);
+        data.push(item);
     };
+    console.log(data)
 
     var s = new Date().getTime();
     var values = idw(data,width,height);
+    console.log(values)
     var e = new Date().getTime();
     console.log('插值：'+(e-s)/1000+'秒');
 
     var s1 = new Date().getTime();
-    var thresholds = 12;
+    var thresholds = 20;
 
-    var contours = d3.contours()
-        .size([width, height])
-        .thresholds(thresholds);
 
+    var contours = d3.contours()//生成一个轮廓
+        .size([width, height])//轮廓网格列行数
+        .thresholds(thresholds);//阈值
+
+    //构建一个颜色线性比例尺
     var color = d3.scaleLinear()
         .domain([1,10])
         .range(["green", "red"]);
+    console.log(color(0),color(7))
 
     //绘制等高线
     svg.selectAll("path")
@@ -78,7 +93,7 @@
     var e1 = new Date().getTime();
     console.log('绘制：'+(e1-s1)/1000+'秒');
 
-    //idw 插值算法
+    //idw 插值算法:彼此距离较近的事物要比彼此距离较远的事物更相似
     function idw(data, width, height) {
 
         var d = data;
