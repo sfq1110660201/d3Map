@@ -42,7 +42,7 @@
     console.log('插值：'+(e-s)/1000+'秒');
 
     var s1 = new Date().getTime();
-    var thresholds = 20;
+    var thresholds = 10;
 
 
     var contours = d3.contours()//生成一个轮廓
@@ -52,7 +52,7 @@
     //构建一个颜色线性比例尺
     var color = d3.scaleLinear()
         .domain([1,10])
-        .range(["green", "red"]);
+        .range(["yellowgreen", "brown"]);
     console.log(color(0),color(7))
 
     //绘制等高线

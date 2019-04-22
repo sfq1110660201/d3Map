@@ -1,0 +1,80 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<title>svg</title>
+	<style type="text/css">
+		*{
+			padding: 0;
+			margin: 0;
+		}
+	</style>
+</head>
+<body>
+	<!-- stroke和stroke-width用来定义显示图形的轮廓 -->
+	<svg stroke="yellow" stroke-width=5  fill="steelblue">
+		<rect x='10' y='0' width='150' height='100'/>
+	</svg>
+	<svg>
+	  <rect width="300" height="100"
+	  style="fill:yellowgreen;stroke-width:5;stroke:rgb(12,230,0)"/>
+	</svg>
+
+	<!-- 圆 -->
+	<svg>
+		<circle cx="100" cy="100" r=50 stroke="red" stroke-width=5 fill="white"/>
+	</svg>
+
+	<!-- 椭圆 -->
+	<svg>
+		<ellipse cx=100 cy=100 rx=100 ry=50 stroke="green" stroke-width=5 fill="blue" />
+	</svg>
+
+	<!-- 直线 -->
+	<svg>
+		<line x1=10 y1=10 x2=100 y2=100 stroke="#666" stroke-width=2 />
+	</svg>
+
+	<!-- 多边形 -->
+	<svg width=300 height=300>
+		<polygon 
+		points="200,10 250,190 160,210"
+		stroke="purple" fill="lime" stroke-width=1 />
+	</svg>
+	<svg width=300 height=300>
+		<polygon points="100,10 40,180 190,60 10,60 160,180"
+  style="fill:lime;stroke:purple;stroke-width:1;fill-rule:evenodd;" />
+	</svg>
+
+	<!-- 曲线 -->
+	<svg >
+		<polyline points="0,30 30,30 30,60 60,60 60,90 90,90 90,120"
+		 style="stroke: red;stroke-width:4;fill:white;"/>
+	</svg>
+	<!-- 路径 -->
+	<!-- 大写表示绝对定位，小写表示相对定位(相对上一坐标移动x,y单位)。 -->
+	<svg width=300 height=300>
+		<path d="M150 25 L75 200 L225 200 Z" stroke="blue" stroke-width=2 fill="#fff" />
+	</svg>
+	<svg width="450" height=400>
+		<path id="lineAB" d="M100 350 l150 -300" stroke="red" stroke-width=3 fill="none"/>
+		<path id="lineBC" d="M250 50 l150 300" stroke="red" stroke-width=3 fill="none"/>
+		<path d="M175 200 l150 0" stroke="green" stroke-width="3" fill="none" />
+		<path d="M100 350 q150 -300 300 0" stroke="blue" stroke-width="5" fill="none" />
+		<g stroke="black" stroke-width=3 fill="black">
+			<circle cx="100" cy="350" r=2 />
+			<circle cx="250" cy="50" r=2 />
+			<circle cx="400" cy="350" r=2 />
+		</g>
+		<g font-size="30" font="sans-serif" fill="black" stroke="none" text-anchor="middle">
+			<text x="100" y="350">A</text>
+			<text x="250" y="50">B</text>
+			<text x="400" y="350">C</text>
+		</g>
+	</svg>
+	<!-- 文本 -->
+	<svg>
+		<text x=0 y=15 style="fill:red;transform:rotate(30deg)">OWESOME</text>
+	</svg>
+
+</body>
+</html>
