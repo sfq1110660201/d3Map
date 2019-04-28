@@ -1,0 +1,84 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<title>extends</title>
+</head>
+<body>
+	<script type="text/javascript">
+		/*
+		**call方法
+		*/
+
+		function add(a,b){
+			console.log(a+b);
+		}
+
+		function sub(a,b){
+			console.log(a-b);
+		}
+
+		add.call(sub,2,1);//==add(2,1)
+		sub(2,1);
+
+		function class1(){
+			this.name = 'class1';
+			this.showName = function(){
+				console.log(this.name)
+			}
+		}
+
+		function class2(){
+			this.name = 'class2';
+		}
+		let c1 = new class1();
+		let c2 = new class2();
+		c1.showName();
+		c1.showName.call(c2);
+
+		//实现继承
+		function animal(){
+			this.sex = '男'
+			this.age = 25;
+			this.arr= [1,2]
+			this.named = function(){
+				console.log(this.age)
+			}
+		}
+
+		animal.prototype.sing = function(){
+			console.log('i m '+this.age+'years old!')
+		}
+		console.log(animal.prototype)
+
+		function cat(){
+			this.age = 24;
+			this.sex="女"
+			// console.log(this)
+			animal.call(this)
+			this.eat = function(){
+				console.log('mouse');
+			}
+			
+		}
+		// cat.prototype = Object.create(animal.prototype);
+		// cat.prototype.constructor = cat;
+
+		cat.prototype = new animal();
+
+		let bosiCat = new cat();
+		console.log(bosiCat);
+		bosiCat.arr.push(3);
+		console.log(bosiCat.arr);//[1,2,3]
+		bosiCat.named()
+		let cat2 = new cat();
+		console.log(cat2.arr);
+		console.log(bosiCat.hasOwnProperty('age'))
+		console.log(cat.prototype)
+
+		
+	</script>
+
+	
+
+</body>
+</html>

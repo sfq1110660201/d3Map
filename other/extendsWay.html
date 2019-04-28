@@ -1,0 +1,127 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<title>继承的多种方法</title>
+</head>
+<body>
+	<script type="text/javascript">
+		console.log('---------------原型链继承--------------')
+		//1 原型链继承
+		function Parent(){
+			console.log(this)
+			this.name = 'sfq';
+			this.age = 25;
+			this.arr = [1,2]
+		}
+		Parent.prototype.getName = function(){
+			console.log(this)
+			console.log(this.name);
+		}
+
+		function Child(){
+			this.name = 'sfq2';
+			this.age = 24;
+		}
+		// console.log(Child.prototype);
+
+		Child.prototype = new Parent();
+		let c = new Child();
+		let c2 = new Child();
+		console.log(c);
+		c.getName();
+
+		c.arr.push(3);
+		console.log(c.arr)//[1,2,3]
+		console.log(c2.arr)//[1,2,3].引用类型的属性被所有实例共享
+	</script>
+	<script type="text/javascript">
+		console.log('-----------------构造函数继承---------------')
+		//构造函数继承
+		function Animal(name){
+			this.name=name;
+			this.arr = [1,2,3];
+		}
+
+		Animal.prototype.syaWo=function(){
+			console.log('wo...')
+		}
+
+		function Dog(name){
+			Animal.call(this,name);
+			this.host = 'jenny';
+		}
+
+		let dog1 = new Dog('zzz');
+		console.log(dog1)
+		console.log(dog1.name)
+		// dog1.syaWo();么有sayWo方法
+		dog1.arr.push(4);
+		let dog2 = new Dog('www');
+		console.log(dog1.arr)//[1, 2, 3, 4]
+		console.log(dog2.arr)//[1, 2, 3]
+		//方法都在构造函数中定义，每次创建实例都会创建一遍方法。
+
+
+	</script>
+	<script type="text/javascript">
+		console.log('----------------组合继承-----------------')
+		//组合继承
+		//融合原型链继承和构造函数的优点，是 JavaScript 中最常用的继承模式。
+
+		function Fruit(color){
+			this.color = color;
+			this.arr = [1,2,3];
+		}
+		Fruit.prototype.getColor = function(){
+			console.log(this.color);
+		}
+
+		function Apple(color,name){
+			Fruit.call(this,color,name);
+			this.name = name;
+		}
+
+		Apple.prototype = new Fruit();
+		Apple.prototype.constructor = Apple;
+
+		let apple1 = new Apple('red','apple1');
+		console.log(apple1);
+		apple1.getColor();
+		apple1.arr.push(4);
+
+		let apple2 = new Apple('yellow','apple2');
+		console.log(apple2);
+		apple2.getColor(); 
+
+	</script>
+	<script type="text/javascript">
+		console.log('----------------寄生组合式继承----------------')
+		//寄生组合式继承
+		function Vegetables(name){
+			this.name = name;
+			this.colors = [1,2,3];
+			this.weight = 'weight'
+		}
+
+		Vegetables.prototype.getName = function(){
+			console.log(this.name);
+		}
+		Vegetables.prototype.round = true;
+
+
+		function Potato(name,age){
+			Vegetables.call(this,name);
+			this.age = age;
+		}
+
+		let F = function(){};
+		F.prototype = Vegetables.prototype; 
+
+		Potato.prototype =new F();
+		let potato = new Potato('potato','25');
+		console.log(potato);
+	</script>
+
+
+</body>
+</html>

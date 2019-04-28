@@ -1,0 +1,50 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<title></title>
+</head>
+<body>
+	<script type="text/javascript">
+		const arr = [1,2,3,4,5,6];
+		let a = arr;
+		let b = arr;
+		let c = arr;
+		let d = arr;
+		let e = arr;
+		let f = arr;
+		a.forEach(arrForEach);
+		function arrForEach(item,index,arr){
+			console.log(index);
+			document.write(`[${index}] = ${item}<br/>`)
+		}
+		let newb = b.map(arrMap);
+		function arrMap(item,index,arr){
+			return Math.pow(item,2);
+		}
+		console.log(newb)
+		let newc = c.filter(arrFilter);
+		function arrFilter(item,index,arr){
+			// console.log(arr)
+			return index > 2;
+		}
+		console.log('newc:',newc)
+		let newd = d.reduce(arrReduce);
+		function arrReduce(prev,next){
+			// console.log(prev,next)
+			return prev+next;
+		}
+		console.log(newd);
+		let newe = e.every((item,index,s) => {
+			// console.log(s)//打印1次就false
+			return item >= 2;
+		})
+		console.log(newe);
+		let newf = f.some((item,index,s) => {
+			// console.log(s)//打印第3次就true
+			return item > 2;
+		})
+		console.log(newf);
+	</script>
+
+</body>
+</html>
